@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>BUYCC CARD EXTRACT TOOL</title>
 
 <style>
@@ -11,120 +10,52 @@
 body{
 margin:0;
 font-family:Arial, sans-serif;
-
 background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-
 min-height:100vh;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
 padding:20px;
 color:white;
 }
 
 .container{
-
 width:95%;
-max-width:500px;
-
+max-width:600px;
 background: rgba(255,255,255,0.08);
-
 backdrop-filter: blur(20px);
-
 border-radius:18px;
-
 padding:30px;
-
-box-shadow:
-0 0 25px rgba(0,0,0,0.6),
-0 0 60px rgba(0,0,0,0.4);
-
-animation:fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn{
-
-from{
-opacity:0;
-transform:translateY(20px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
+box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
 .title{
-
 text-align:center;
 font-size:26px;
 font-weight:bold;
-
 margin-bottom:15px;
-
-letter-spacing:1px;
 }
 
 textarea{
-
 width:100%;
-
 padding:12px;
-
 margin-top:10px;
-
 border-radius:10px;
-
 border:none;
-
 outline:none;
-
 font-size:14px;
-
-background:rgba(255,255,255,0.95);
-
-color:black;
-
-resize:none;
-}
-
-#input{
-height:120px;
-}
-
-#output{
-height:140px;
-margin-top:10px;
+min-height:120px;
 }
 
 button{
-
 width:100%;
-
-padding:13px;
-
+padding:14px;
 margin-top:10px;
-
 border:none;
-
 border-radius:10px;
-
 font-size:15px;
-
 font-weight:bold;
-
 cursor:pointer;
-
-transition:0.25s;
-}
-
-button:hover{
-
-transform:scale(1.04);
 }
 
 .extract{
@@ -134,12 +65,10 @@ color:white;
 
 .download{
 background:linear-gradient(45deg,#f7971e,#ffd200);
-color:black;
 }
 
 .copy{
 background:linear-gradient(45deg,#00ff87,#60efff);
-color:black;
 }
 
 .clear{
@@ -148,57 +77,38 @@ color:white;
 }
 
 .count{
-
-margin-top:12px;
-
 text-align:center;
-
-font-size:16px;
-
+margin-top:10px;
 font-weight:bold;
 }
 
 .footer{
-
-margin-top:18px;
-
 text-align:center;
-
-font-size:14px;
+margin-top:15px;
 }
 
 .footer a{
-
 color:#00c6ff;
-
 text-decoration:none;
-
 font-weight:bold;
 }
 
-.footer a:hover{
-
-text-decoration:underline;
-}
-
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
 
-<div class="title">
-BUYCC CARD EXTRACT TOOL
-</div>
+<div class="title">BUYCC CARD EXTRACT TOOL</div>
 
 <textarea id="input" placeholder="Paste your data here..."></textarea>
 
-<button class="extract" onclick="extractCards()">EXTRACT</button>
+<button class="extract" onclick="extract()">EXTRACT</button>
 
-<button class="download" onclick="downloadCards()">DOWNLOAD TXT</button>
+<button class="download" onclick="download()">DOWNLOAD TXT</button>
 
-<button class="copy" onclick="copyCards()">COPY DATA</button>
+<button class="copy" onclick="copy()">COPY DATA</button>
 
 <button class="clear" onclick="clearAll()">CLEAR</button>
 
@@ -210,16 +120,14 @@ TOTAL CARDS: <span id="count">0</span>
 
 <div class="footer">
 
-CONTACT OWNER<br>
-
+CONTACT OWNER  
 <a href="https://t.me/SHUVO_MAHMUD01" target="_blank">
 MR SHUVO AHAMMAD
 </a>
 
 <br><br>
 
-© 2026 DEV BY<br>
-
+© 2026 DEV BY  
 <a href="https://t.me/boost_help_zone04" target="_blank">
 TRICK ZONE BOOST CENTER
 </a>
@@ -230,64 +138,51 @@ TRICK ZONE BOOST CENTER
 
 <script>
 
-function extractCards(){
+function extract(){
 
-let input =
-document.getElementById("input").value;
+let input=document.getElementById("input").value;
 
-let regex =
-/(?:\d{13,16})[\|\:\s](\d{1,2})[\|\:\s](\d{2,4})[\|\:\s](\d{3,4})/g;
+let cards=input.match(/\d{16}\D*\d{2}\D*\d{2,4}\D*\d{3}/g);
 
-let matches =
-input.match(regex);
+if(cards){
 
-if(matches){
+document.getElementById("output").value=cards.join("\n");
 
-document.getElementById("output").value =
-matches.join("\n");
-
-document.getElementById("count").innerText =
-matches.length;
+document.getElementById("count").innerText=cards.length;
 
 }else{
 
-document.getElementById("output").value = "";
+document.getElementById("output").value="";
 
-document.getElementById("count").innerText = 0;
-
-}
+document.getElementById("count").innerText=0;
 
 }
 
-function copyCards(){
+}
 
-let text =
-document.getElementById("output");
+function copy(){
+
+let text=document.getElementById("output");
 
 text.select();
 
 document.execCommand("copy");
 
-alert("COPIED SUCCESSFULLY");
+alert("COPIED SUCCESS");
 
 }
 
-function downloadCards(){
+function download(){
 
-let text =
-document.getElementById("output").value;
+let text=document.getElementById("output").value;
 
-let blob =
-new Blob([text],{type:"text/plain"});
+let blob=new Blob([text],{type:"text/plain"});
 
-let a =
-document.createElement("a");
+let a=document.createElement("a");
 
-a.href =
-URL.createObjectURL(blob);
+a.href=URL.createObjectURL(blob);
 
-a.download =
-"cards.txt";
+a.download="cards.txt";
 
 a.click();
 
@@ -295,11 +190,9 @@ a.click();
 
 function clearAll(){
 
-document.getElementById("input").value = "";
-
-document.getElementById("output").value = "";
-
-document.getElementById("count").innerText = 0;
+document.getElementById("input").value="";
+document.getElementById("output").value="";
+document.getElementById("count").innerText="0";
 
 }
 
